@@ -16,13 +16,12 @@ def ingest_docs_to_vector_db(table):
         with open(file) as f:
             content = f.read()
 
-
         document_name = file.name
-        #make idempotent
+        # make idempotent
         table.delete(f"document_name = '{document_name}'")
 
         table.add([{
-            "document_name": file.name,
+            "document_name": document_name,
             "filepath": str(file),
             "content": content
         }])
@@ -31,13 +30,4 @@ def ingest_docs_to_vector_db(table):
 
 if __name__ == "__main__":
     vector_db = setup_vector_db(VECTOR_DB_PATH)
-    ingest_docs_to_vector_db(vector_db["articles"])   
-
-        # TODO: put the raw text or content into knowledge_base
-
-        # print(file.name)
-        # print(content)
-
-    # print(VECTOR_DB_PATH)  
-
-
+    ingest_docs_to_vector_db(vector_db["articles"])

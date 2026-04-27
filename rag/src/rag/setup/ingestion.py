@@ -1,9 +1,13 @@
 from rag.backend.constants import DATA_PATH, VECTOR_DB_PATH
 import lancedb
 
+
 # TODO: create a knowledge_base with an appropriate table
 def setup_vector_db(path):
-    vector_db = lancedb.connect(uri = path)
+    vector_db = lancedb.connect(uri=path)
+    vector_db.create_table("articles", schema=Article, exist_ok=True)
+
+    return vector_db
 
 
 def ingest_docs_to_vector_db(table):
@@ -16,5 +20,5 @@ def ingest_docs_to_vector_db(table):
         # print(file.name)
         # print(content)
 
-    # print(VECTOR_DB_PATH)    
+    # print(VECTOR_DB_PATH)  
 

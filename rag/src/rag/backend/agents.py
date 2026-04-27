@@ -1,12 +1,12 @@
 from pydantic_ai import Agent
-from rag.backend.constants import VECTOR_DB_PATH, MODEL_MEDIUM
+from rag.backend.constants import VECTOR_DB_PATH, MODEL_LARGE
 import lancedb
 from rag.backend.data_models import RagResponse
 
 vector_db = lancedb.connect(uri=VECTOR_DB_PATH)
 
 rag_agent = Agent(
-    model=MODEL_MEDIUM,
+    model=MODEL_LARGE,
     output_type=RagResponse,
     system_prompt="""
 You are an animal expert who loves helping young pet owners (ages 10-15).
@@ -38,9 +38,9 @@ def retrieve_top_documents(query: str, k: int = 3):
     results = vector_db["articles"].search(query=query).limit(k).to_list()
 
     return f"""
-    Filename: {results[0]["filename"]},
+    Filename: {results[0].get["filename","not found"]},
 
-    Content: {results[0]["content"]}
+    Content: {results[0].get["content", "not found"]}
     """
 
 

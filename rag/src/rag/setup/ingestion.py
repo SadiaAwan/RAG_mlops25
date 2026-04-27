@@ -1,5 +1,6 @@
 from rag.backend.constants import DATA_PATH, VECTOR_DB_PATH
 import lancedb
+from rag.backend.data_models import Article
 
 
 # TODO: create a knowledge_base with an appropriate table
@@ -15,10 +16,28 @@ def ingest_docs_to_vector_db(table):
         with open(file) as f:
             content = f.read()
 
+
+        document_name = file.name
+        #make idempotent
+        table.delete(f"document_name = '{document_name}'")
+
+        table.add([{
+            "document_name": file.name,
+            "filepath": str(file),
+            "content": content
+        }])
+
+        print(table.to_pandas()["document_name"])
+
+if __name__ == "__main__":
+    vector_db = setup_vector_db(VECTOR_DB_PATH)
+    ingest_docs_to_vector_db(vector_db["articles"])   
+
         # TODO: put the raw text or content into knowledge_base
 
         # print(file.name)
         # print(content)
 
     # print(VECTOR_DB_PATH)  
+
 

@@ -1,16 +1,24 @@
 [project]
 name = "rag"
 version = "0.1.0"
-description = "Add your description here"
+description = "RAG proj"
 readme = "README.md"
 authors = [
     { name = "tasmina@hotmail.com", email = "tasmina@hotmail.com" }
 ]
 requires-python = ">=3.13"
-dependencies = []
+dependencies = [
+    "backend",
+    "frontend",
+    "ipykernel>=7.2.0",
+]
 
-[project.scripts]
-rag = "rag:main"
+[tool.uv.sources]
+backend = { workspace = true }
+frontend = { workspace = true }
+
+[tool.uv.workspace]
+members = ["src/rag/frontend", "src/rag/backend"]
 
 [build-system]
 requires = ["uv_build>=0.9.12,<0.10.0"]

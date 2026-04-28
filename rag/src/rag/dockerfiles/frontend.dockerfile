@@ -10,6 +10,6 @@ WORKDIR /app/frontend
 
 RUN uv sync --no-dev
 
-CMD  ["uv", "run", "streamlit", "run", "app.py", "--server.port", "8501", "--server.address","0.0.0.0"]
+CMD  ["uv", "run", "streamlit", "run", "app.py", "--server.port", "8501", "--server.address", "0.0.0.0"]
 
 

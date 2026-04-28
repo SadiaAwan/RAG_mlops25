@@ -14,9 +14,7 @@ def layout():
     text_input = st.text_input(label="ask a question")
 
     if st.button("send") and text_input.strip() != "":
-        response = httpx.post(
-            f"{API_URL}/rag/query", json={"prompt": text_input}, timeout=120
-        )
+        response = httpx.post(f"{API_URL}/rag/query", json={"prompt": text_input}, timeout=120)
        
         data = response.json()
 
@@ -27,7 +25,7 @@ def layout():
         st.markdown(data.get("answer"))
         
         st.markdown("## Source:")
-        st.markdown(data.get("filepath"))
+        st.markdown(data.get("filename"))
 
 
 if __name__ == "__main__":
